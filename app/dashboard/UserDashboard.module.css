@@ -1,0 +1,436 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+/* Welcome Section */
+.welcomeSection {
+  margin-bottom: 2rem;
+}
+
+.welcomeTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.welcomeSubtitle {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.statIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 0.75rem;
+  background: #eff6ff;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statNumber {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+  line-height: 1;
+}
+
+.statLabel {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statLink {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.statLink:hover {
+  color: #2563eb;
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status.paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Main Content */
+.mainContent {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.viewAllLink:hover {
+  color: #2563eb;
+}
+
+/* Room Info */
+.roomInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.roomDetail {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.roomDetail svg {
+  color: #3b82f6;
+}
+
+.roomDetail strong {
+  color: #1f2937;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.roomDetail p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.roomStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #059669;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* No Room State */
+.noRoom {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.noRoom h3 {
+  color: #374151;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.noRoom p {
+  margin: 0 0 1.5rem 0;
+}
+
+.browseButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.browseButton:hover {
+  background: #2563eb;
+}
+
+/* Payments List */
+.paymentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paymentItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #f3f4f6;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+
+.paymentItem:hover {
+  border-color: #e5e7eb;
+  background: #f9fafb;
+}
+
+.paymentInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.paymentInfo svg {
+  color: #059669;
+}
+
+.paymentInfo strong {
+  color: #1f2937;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.paymentInfo p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.paymentAmount {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+.noPayments {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.noPayments p {
+  margin: 1rem 0 1.5rem 0;
+}
+
+.payNowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #059669;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.payNowButton:hover {
+  background: #047857;
+}
+
+/* Quick Actions */
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.actionCard {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.actionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+  color: inherit;
+}
+
+.actionCard svg {
+  color: #3b82f6;
+}
+
+.actionCard span {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1.125rem;
+}
+
+.actionCard p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .welcomeTitle {
+    font-size: 2rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    padding: 1.25rem;
+  }
+
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+
+  .roomInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .actionsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcomeTitle {
+    font-size: 1.75rem;
+  }
+
+  .statCard {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .paymentItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .paymentAmount {
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,427 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.headerLeft {
+  flex: 1;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin: 0;
+}
+
+.exportButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #059669;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.exportButton:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+/* Date Range */
+.dateRange {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.dateInput {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Summary Grid */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summaryCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.summaryIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 0.75rem;
+  background: #eff6ff;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summaryContent {
+  flex: 1;
+}
+
+.summaryValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+  line-height: 1;
+}
+
+.summaryLabel {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Charts Grid */
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+.chartCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.chartCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.chartTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.chartContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Revenue Chart */
+.revenueItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.month {
+  font-weight: 500;
+  color: #374151;
+  min-width: 80px;
+  font-size: 0.875rem;
+}
+
+.revenueBar {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.revenueAmount {
+  font-weight: 600;
+  color: #059669;
+  min-width: 80px;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+/* Payment Methods */
+.methodItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.methodItem:last-child {
+  border-bottom: none;
+}
+
+.methodInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.methodName {
+  font-weight: 500;
+  color: #374151;
+}
+
+.methodCount {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.methodAmount {
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Occupancy Chart */
+.occupancyChart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.occupancyItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.occupancyLabel {
+  font-weight: 500;
+  color: #374151;
+  min-width: 80px;
+  font-size: 0.875rem;
+}
+
+.occupancyBar {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.occupancyFill {
+  height: 100%;
+  background: linear-gradient(90deg, #059669, #10b981);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.occupancyFillAvailable {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.occupancyValue {
+  font-weight: 600;
+  color: #374151;
+  min-width: 40px;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+/* Top Rooms */
+.roomItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.roomItem:last-child {
+  border-bottom: none;
+}
+
+.roomRank {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.roomInfo {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.roomName {
+  font-weight: 500;
+  color: #374151;
+}
+
+.roomRevenue {
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .exportButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dateRange {
+    flex-direction: column;
+  }
+
+  .dateInput {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .chartCard {
+    padding: 1rem;
+  }
+
+  .revenueItem,
+  .methodItem,
+  .occupancyItem,
+  .roomItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .revenueAmount,
+  .methodAmount,
+  .occupancyValue {
+    text-align: left;
+  }
+}

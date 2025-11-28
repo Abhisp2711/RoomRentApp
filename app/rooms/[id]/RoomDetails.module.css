@@ -1,0 +1,409 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  margin-bottom: 2rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #374151;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status.available {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.occupied {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.rent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Gallery */
+.gallery {
+  margin-bottom: 2rem;
+}
+
+.mainImage {
+  width: 100%;
+  height: 400px;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.mainImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnailContainer {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+.thumbnail {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: none;
+  padding: 0;
+}
+
+.thumbnail:hover {
+  border-color: #3b82f6;
+}
+
+.thumbnail.active {
+  border-color: #3b82f6;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detailsSection,
+.amenitiesSection,
+.tenantSection,
+.actionSection {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.detailsSection h2,
+.amenitiesSection h2,
+.tenantSection h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+/* Details Grid */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detailItem strong {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.detailItem span {
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.statusBadge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.statusBadge.available {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusBadge.occupied {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* Description */
+.description h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.description p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Amenities */
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.amenityItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.amenityItem svg {
+  color: #059669;
+}
+
+/* Tenant Info */
+.tenantInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tenantDetail {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #374151;
+}
+
+.tenantDetail svg {
+  color: #6b7280;
+}
+
+/* Action Section */
+.availableActions,
+.occupiedMessage {
+  text-align: center;
+}
+
+.rentButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #059669;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.rentButton:hover {
+  background: #047857;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+}
+
+.helpText {
+  color: #6b7280;
+  margin: 1rem 0 0 0;
+  font-size: 0.875rem;
+}
+
+.occupiedMessage p {
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.browseButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.browseButton:hover {
+  background: #2563eb;
+}
+
+/* Loading and Error States */
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 50vh;
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.errorContainer h2 {
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.errorContainer p {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.backButton:hover {
+  background: #2563eb;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .statusContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mainImage {
+    height: 300px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .amenitiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsSection,
+  .amenitiesSection,
+  .tenantSection,
+  .actionSection {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .rent {
+    font-size: 1.25rem;
+  }
+
+  .rentButton {
+    width: 100%;
+    min-width: auto;
+  }
+}
