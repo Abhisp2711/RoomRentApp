@@ -72,7 +72,7 @@ export default function RoomManagement() {
       setRooms(data);
     } catch (error) {
       console.error("Error fetching rooms:", error);
-      alert("Failed to fetch rooms");
+      toast("Failed to fetch rooms");
     } finally {
       setLoading(false);
     }
@@ -105,15 +105,14 @@ export default function RoomManagement() {
       }
 
       const data = await response.json();
-      console.log("Room created:", data);
 
-      alert("Room created successfully!");
+      toast("Room created successfully!");
       setCreateForm({ roomNumber: "", monthlyRent: "", photos: [] });
       fetchRooms();
       setActiveTab("rooms");
     } catch (error) {
       console.error("Error creating room:", error);
-      alert("Failed to create room");
+      toast("Failed to create room");
     } finally {
       setSaving(false);
     }
@@ -122,7 +121,7 @@ export default function RoomManagement() {
   const handleAssignTenant = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedRoom) {
-      alert("Please select a room");
+      toast("Please select a room");
       return;
     }
 
@@ -147,16 +146,15 @@ export default function RoomManagement() {
       }
 
       const data = await response.json();
-      console.log("Tenant assigned:", data);
 
-      alert("Tenant assigned successfully!");
+      toast("Tenant assigned successfully!");
       setAssignForm({ userId: "", name: "", email: "", startDate: "" });
       setSelectedRoom("");
       fetchRooms();
       setActiveTab("rooms");
     } catch (error) {
       console.error("Error assigning tenant:", error);
-      alert("Failed to assign tenant");
+      toast("Failed to assign tenant");
     } finally {
       setSaving(false);
     }
@@ -182,13 +180,12 @@ export default function RoomManagement() {
       }
 
       const data = await response.json();
-      console.log("Room deleted:", data);
 
-      alert("Room deleted successfully!");
+      toast("Room deleted successfully!");
       fetchRooms();
     } catch (error) {
       console.error("Error deleting room:", error);
-      alert("Failed to delete room");
+      toast("Failed to delete room");
     }
   };
 
