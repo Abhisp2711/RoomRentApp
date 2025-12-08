@@ -49,30 +49,45 @@ export default function Footer() {
             <div className={styles.contactInfo}>
               <div className={styles.contactItem}>
                 <Mail size={16} />
-                <span>support@roomrent.com</span>
+                <span>abhisp2711@gmail.com</span>
               </div>
               <div className={styles.contactItem}>
                 <Phone size={16} />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 9142953494</span>
               </div>
               <div className={styles.contactItem}>
                 <MapPin size={16} />
-                <span>123 Rental St, City, State 12345</span>
+                <span>
+                  Shiv Nagar,Near medical college,Pokharaha
+                  khurd,Daltonganj,Jharkhand 822101
+                </span>
               </div>
             </div>
 
             {/* Social Links */}
             <div className={styles.socialLinks}>
-              <a href="#" className={styles.socialLink} aria-label="Facebook">
+              <a
+                href="https://www.facebook.com/profile.php?id=100021696497769&__n=K&_rdr"
+                className={styles.socialLink}
+                aria-label="Facebook"
+              >
                 <Facebook size={18} />
               </a>
               <a href="#" className={styles.socialLink} aria-label="Twitter">
                 <Twitter size={18} />
               </a>
-              <a href="#" className={styles.socialLink} aria-label="LinkedIn">
+              <a
+                href="https://www.linkedin.com/in/abhishek-kumar-singh-881670299/"
+                className={styles.socialLink}
+                aria-label="LinkedIn"
+              >
                 <Linkedin size={18} />
               </a>
-              <a href="#" className={styles.socialLink} aria-label="GitHub">
+              <a
+                href="https://github.com/Abhisp2711"
+                className={styles.socialLink}
+                aria-label="GitHub"
+              >
                 <Github size={18} />
               </a>
             </div>
@@ -131,7 +146,7 @@ export default function Footer() {
                 <Link href="/tenants" className={styles.footerLink}>
                   Tenants
                 </Link>
-                <Link href="/payments" className={styles.footerLink}>
+                <Link href="/payment-history" className={styles.footerLink}>
                   Payments
                 </Link>
               </div>
