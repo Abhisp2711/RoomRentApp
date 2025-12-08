@@ -4,15 +4,17 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 interface User {
-  _id: string;
+  id: string; // Changed from _id to id to match your usage
   name: string;
   email: string;
-  role: "admin" | "user";
+  role: "admin" | "user" | "tenant"; // Added tenant role
   profilePhoto?: string;
+  phone?: string;
 }
 
 interface AuthContextType {
   user: User | null;
+  token: string | null; // Add token to context
   login: (email: string, password: string) => Promise<void>;
   register: (userData: {
     name: string;
@@ -32,32 +34,20 @@ const API_BASE_URL =
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null); // Add token state
   const [loading, setLoading] = useState(true);
 
-  // Restore user on page refresh
+  // Restore user and token on page refresh
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      verifyToken(token);
-    } else {
-      setLoading(false);
-    }
-  }, []);
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
 
-  const verifyToken = async (token: string) => {
-    try {
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        setUser(JSON.parse(userData));
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Token verify failed:", error);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setLoading(false);
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
     }
-  };
+    setLoading(false);
+  }, []);
 
   // -------------------------
   // REGISTER (SEND OTP)
@@ -105,6 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
+      setToken(data.token);
       setUser(data.user);
       toast.success("Registration completed successfully!");
     } catch (err: any) {
@@ -133,6 +124,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
+      setToken(data.token);
       setUser(data.user);
       toast.success("Login successful!");
     } catch (err: any) {
@@ -144,7 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   // -------------------------
-  // UPDATE USER (FIXED)
+  // UPDATE USER
   // -------------------------
   const updateUser = (updated: Partial<User>) => {
     if (!user) return;
@@ -160,6 +152,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // -------------------------
   const logout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged out successfully!");
@@ -169,6 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
+        token, // Now token is included
         login,
         register,
         verifyOtp,

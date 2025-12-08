@@ -18,12 +18,12 @@ import Link from "next/link";
 import styles from "./MyRoom.module.css";
 
 interface Room {
-  _id: string;
+  id: string;
   roomNumber: string;
   monthlyRent: number;
   description?: string;
   amenities?: string[];
-  photos: Array<{ url: string; public_id: string }>;
+  photos: string[];
   tenant: {
     name: string;
     email: string;
@@ -118,7 +118,7 @@ export default function MyRoomPage() {
               {room.photos.map((photo, index) => (
                 <img
                   key={index}
-                  src={photo.url}
+                  src={photo}
                   alt={`Room ${room.roomNumber} - ${index + 1}`}
                   className={styles.roomImage}
                 />
@@ -165,7 +165,7 @@ export default function MyRoomPage() {
             <div className={styles.detailsList}>
               <div className={styles.detailItem}>
                 <User size={16} />
-                <span>{room.tenant.name}</span>
+                <span>{room.tenant.name}</span>/
               </div>
               <div className={styles.detailItem}>
                 <Mail size={16} />

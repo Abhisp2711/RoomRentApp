@@ -19,6 +19,13 @@ import {
   Trash2,
   Crown,
   SlidersHorizontal,
+  Key,
+  Phone,
+  MessageCircle,
+  Mail,
+  UserCheck,
+  Clock,
+  AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
@@ -37,9 +44,12 @@ interface Room {
   amenities?: string[];
   size?: string;
   floor?: number;
+  building?: string;
+  ownerPhone?: string;
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const ROOM_OWNER_PHONE = "9142953494"; // Hardcoded owner phone number
 
 export default function RoomsPage() {
   const router = useRouter();
@@ -52,6 +62,10 @@ export default function RoomsPage() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]);
   const [showFilters, setShowFilters] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [assigningRoom, setAssigningRoom] = useState<string | null>(null);
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+
   // Mock amenities for filter
   const allAmenities = [
     "WiFi",
@@ -75,7 +89,14 @@ export default function RoomsPage() {
       const response = await fetch(`${API_BASE_URL}/rooms`);
       if (!response.ok) throw new Error("Failed to fetch rooms");
       const data = await response.json();
-      setRooms(data);
+
+      // Add owner phone to each room
+      const roomsWithOwner = data.map((room: Room) => ({
+        ...room,
+        ownerPhone: ROOM_OWNER_PHONE,
+      }));
+
+      setRooms(roomsWithOwner);
 
       if (data.length > 0) {
         const prices = data.map((room: Room) => room.monthlyRent);
@@ -85,6 +106,7 @@ export default function RoomsPage() {
       }
     } catch (error) {
       console.error("Error fetching rooms:", error);
+      toast.error("Failed to load rooms");
     } finally {
       setLoading(false);
     }
@@ -114,10 +136,130 @@ export default function RoomsPage() {
     }
   };
 
+  const handleAssignRoom = async (room: Room) => {
+    setAssigningRoom(room.id);
+
+    // Check if user has completed profile
+    if (!user?.name || !user?.email || !user?.phone) {
+      toast.error(
+        <div className={styles.toastContent}>
+          <AlertCircle size={20} />
+          <div>
+            <p>Complete your profile to assign a room</p>
+            <button
+              onClick={() => router.push("/profile")}
+              className={styles.toastButton}
+            >
+              Go to Profile
+            </button>
+          </div>
+        </div>,
+        { duration: 5000 }
+      );
+      setAssigningRoom(null);
+      return;
+    }
+
+    try {
+      // Make API call to assign room
+      const response = await fetch(`${API_BASE_URL}/rooms/assign`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          roomId: room.id,
+          tenantId: user.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to assign room");
+      }
+
+      // Update room status
+      setRooms((prev) =>
+        prev.map((r) =>
+          r.id === room.id ? { ...r, isAvailable: false, tenant: user } : r
+        )
+      );
+
+      toast.success(
+        <div className={styles.successToast}>
+          <CheckCircle size={20} />
+          <div>
+            <p>Room assigned successfully!</p>
+            <p className={styles.toastSubtext}>
+              Contact owner at {ROOM_OWNER_PHONE} for further steps
+            </p>
+          </div>
+        </div>,
+        { duration: 6000 }
+      );
+    } catch (error: any) {
+      toast.error(error.message || "Failed to assign room");
+    } finally {
+      setAssigningRoom(null);
+    }
+  };
+
+  const handleCallOwner = (room: Room) => {
+    const message = `Hi, I'm interested in Room ${room.roomNumber} (₹${room.monthlyRent}/month). Please let me know about availability.`;
+    window.location.href = `tel:${ROOM_OWNER_PHONE}`;
+  };
+
+  const handleWhatsAppOwner = (room: Room) => {
+    const message = `Hi, I'm interested in Room ${room.roomNumber} (₹${room.monthlyRent}/month). Please let me know about availability.`;
+    window.open(
+      `https://wa.me/${ROOM_OWNER_PHONE}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  };
+
+  const handleRequestInfo = (room: Room) => {
+    setSelectedRoom(room);
+    setShowAssignModal(true);
+  };
+
+  const handleConfirmAssign = async () => {
+    if (!selectedRoom) return;
+
+    toast.success(
+      <div className={styles.infoToast}>
+        <MessageCircle size={20} />
+        <div>
+          <p>Room request sent!</p>
+          <p className={styles.toastSubtext}>
+            Owner will contact you on {user?.phone || "your number"} within 24
+            hours
+          </p>
+          <div className={styles.toastActions}>
+            <button onClick={() => handleCallOwner(selectedRoom)}>
+              <Phone size={16} />
+              Call Now
+            </button>
+            <button onClick={() => handleWhatsAppOwner(selectedRoom)}>
+              <MessageCircle size={16} />
+              WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>,
+      { duration: 8000 }
+    );
+
+    setShowAssignModal(false);
+    setSelectedRoom(null);
+  };
+
   const filteredRooms = rooms.filter((room) => {
     const matchesSearch =
       room.roomNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      room.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      room.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      room.building?.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesFilter = !filterAvailable || room.isAvailable;
 
@@ -166,6 +308,89 @@ export default function RoomsPage() {
 
   return (
     <div className={styles.container}>
+      {/* Assign Modal */}
+      {showAssignModal && selectedRoom && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2>Request Room Assignment</h2>
+              <button
+                onClick={() => setShowAssignModal(false)}
+                className={styles.closeModal}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className={styles.modalContent}>
+              <div className={styles.roomSummary}>
+                <div className={styles.summaryHeader}>
+                  <Building size={24} />
+                  <div>
+                    <h3>Room {selectedRoom.roomNumber}</h3>
+                    <p>{selectedRoom.building || "Main Building"}</p>
+                  </div>
+                </div>
+
+                <div className={styles.summaryDetails}>
+                  <div className={styles.summaryItem}>
+                    <span>Monthly Rent:</span>
+                    <strong>₹{selectedRoom.monthlyRent}</strong>
+                  </div>
+                  <div className={styles.summaryItem}>
+                    <span>Contact:</span>
+                    <strong>{ROOM_OWNER_PHONE}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.assignmentSteps}>
+                <h4>Assignment Process</h4>
+                <div className={styles.steps}>
+                  <div className={styles.step}>
+                    <div className={styles.stepNumber}>1</div>
+                    <div className={styles.stepContent}>
+                      <strong>Request Sent</strong>
+                      <p>We'll notify the room owner</p>
+                    </div>
+                  </div>
+                  <div className={styles.step}>
+                    <div className={styles.stepNumber}>2</div>
+                    <div className={styles.stepContent}>
+                      <strong>Owner Contact</strong>
+                      <p>Owner will call you for details</p>
+                    </div>
+                  </div>
+                  <div className={styles.step}>
+                    <div className={styles.stepNumber}>3</div>
+                    <div className={styles.stepContent}>
+                      <strong>Room Assigned</strong>
+                      <p>Complete paperwork and move in</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.modalActions}>
+                <button
+                  onClick={() => setShowAssignModal(false)}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmAssign}
+                  className={styles.confirmButton}
+                >
+                  <Key size={18} />
+                  Request Assignment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
@@ -176,7 +401,7 @@ export default function RoomsPage() {
             <div>
               <h1 className={styles.title}>Available Rooms</h1>
               <p className={styles.subtitle}>
-                Find your perfect room and book instantly
+                Browse and assign rooms directly with owner
                 {user?.role === "admin" && (
                   <span className={styles.adminBadge}>Admin Mode</span>
                 )}
@@ -188,7 +413,7 @@ export default function RoomsPage() {
             <div className={styles.adminActions}>
               <Link
                 href="admin/rooms"
-                className={`${styles.rentButton} ${styles.addButton}`}
+                className={`${styles.assignButton} ${styles.addButton}`}
               >
                 <Plus size={20} />
                 Add New Room
@@ -204,7 +429,7 @@ export default function RoomsPage() {
           <Search className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search rooms by number, description, or amenities..."
+            placeholder="Search rooms by number, building, or amenities..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={styles.searchInput}
@@ -314,6 +539,24 @@ export default function RoomsPage() {
                 ))}
               </div>
             </div>
+
+            {/* Contact Info Section */}
+            <div className={styles.contactInfoSection}>
+              <div className={styles.contactHeader}>
+                <Phone size={18} />
+                <span>Need Help? Contact Room Owner</span>
+              </div>
+              <div className={styles.contactDetails}>
+                <div className={styles.contactItem}>
+                  <Phone size={16} />
+                  <span>{ROOM_OWNER_PHONE}</span>
+                </div>
+                <div className={styles.contactItem}>
+                  <Clock size={16} />
+                  <span>Available: 9 AM - 8 PM</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -323,14 +566,10 @@ export default function RoomsPage() {
         <div>
           <h2 className={styles.resultsTitle}>
             {filteredRooms.length} Room{filteredRooms.length !== 1 ? "s" : ""}{" "}
-            Found
+            Available
           </h2>
           <p className={styles.resultsSubtitle}>
-            {filterAvailable && "Showing available rooms only"}
-            {selectedAmenities.length > 0 &&
-              ` with ${selectedAmenities.length} amenity filter${
-                selectedAmenities.length > 1 ? "s" : ""
-              }`}
+            Contact owner directly for assignment: {ROOM_OWNER_PHONE}
           </p>
         </div>
 
@@ -358,7 +597,7 @@ export default function RoomsPage() {
           <Home className={styles.emptyIcon} />
           <h3>No rooms found</h3>
           <p>Try adjusting your search criteria or filters</p>
-          <button onClick={clearFilters} className={styles.rentButton}>
+          <button onClick={clearFilters} className={styles.assignButton}>
             Clear All Filters
           </button>
         </div>
@@ -417,6 +656,9 @@ export default function RoomsPage() {
                     {room.floor && (
                       <p className={styles.roomFloor}>Floor {room.floor}</p>
                     )}
+                    {room.building && (
+                      <p className={styles.roomBuilding}>{room.building}</p>
+                    )}
                   </div>
                   <div className={styles.roomRent}>
                     <IndianRupee size={20} />
@@ -447,6 +689,15 @@ export default function RoomsPage() {
                   </div>
                 )}
 
+                {/* Owner Contact Info */}
+                <div className={styles.ownerContact}>
+                  <div className={styles.contactLabel}>
+                    <Phone size={14} />
+                    <span>Contact Owner:</span>
+                  </div>
+                  <div className={styles.contactValue}>{ROOM_OWNER_PHONE}</div>
+                </div>
+
                 {/* Tenant Info */}
                 {!room.isAvailable && room.tenant && (
                   <div className={styles.tenantInfo}>
@@ -468,12 +719,32 @@ export default function RoomsPage() {
                   </Link>
 
                   {room.isAvailable ? (
-                    <Link
-                      href={`/payments/rent/${room.id}`}
-                      className={styles.rentButton}
-                    >
-                      Rent Now
-                    </Link>
+                    <div className={styles.assignActions}>
+                      <button
+                        onClick={() => handleRequestInfo(room)}
+                        className={styles.assignButton}
+                        disabled={assigningRoom === room.id}
+                      >
+                        {assigningRoom === room.id ? (
+                          <>
+                            <div className={styles.spinnerSmall}></div>
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            <Key size={16} />
+                            Assign Room
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleCallOwner(room)}
+                        className={styles.callButton}
+                        title="Call Owner"
+                      >
+                        <Phone size={16} />
+                      </button>
+                    </div>
                   ) : user?.role === "admin" ? (
                     <div className={styles.adminActions}>
                       <Link
@@ -491,18 +762,41 @@ export default function RoomsPage() {
                         <Trash2 size={16} />
                       </button>
                     </div>
-                  ) : null}
+                  ) : (
+                    <div className={styles.contactButtons}>
+                      <button
+                        onClick={() => handleCallOwner(room)}
+                        className={styles.contactButton}
+                      >
+                        <Phone size={16} />
+                        Call Owner
+                      </button>
+                      <button
+                        onClick={() => handleWhatsAppOwner(room)}
+                        className={styles.whatsappButton}
+                      >
+                        <MessageCircle size={16} />
+                        WhatsApp
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Delete Confirmation */}
                 {deleteConfirm === room.id && (
                   <div className={styles.deleteConfirmation}>
                     <p>Are you sure you want to delete this room?</p>
-                    <div>
-                      <button onClick={() => handleDeleteRoom(room.id)}>
+                    <div className={styles.deleteActions}>
+                      <button
+                        onClick={() => handleDeleteRoom(room.id)}
+                        className={styles.confirmDelete}
+                      >
                         Yes, Delete
                       </button>
-                      <button onClick={() => setDeleteConfirm(null)}>
+                      <button
+                        onClick={() => setDeleteConfirm(null)}
+                        className={styles.cancelDelete}
+                      >
                         Cancel
                       </button>
                     </div>

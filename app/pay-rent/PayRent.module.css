@@ -1,232 +1,504 @@
+/* PayRent.module.css - Simplified for Online & Cash Payments */
+
 .container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 700;
   color: #1f2937;
-  margin: 0 0 0.5rem 0;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
   color: #6b7280;
-  margin: 0;
   font-size: 1.125rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Payment Layout */
 .paymentLayout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 400px;
+  gap: 2.5rem;
   align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .paymentLayout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 /* Payment Form */
 .paymentForm {
   background: white;
-  padding: 2rem;
-  border-radius: 1rem;
+  padding: 2.5rem;
+  border-radius: 1.25rem;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+/* Room Summary */
 .roomSummary {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f3f4f6;
 }
 
 .roomSummary h2 {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   font-size: 1.5rem;
   font-weight: 600;
   color: #1f2937;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 1rem 0;
 }
 
-.roomSummary p {
+.roomMeta {
+  display: flex;
+  gap: 1.5rem;
   color: #6b7280;
-  margin: 0;
+  font-size: 0.875rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: #f9fafb;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+/* Payment Steps */
+.paymentSteps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.paymentSteps::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.stepNumber {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #6b7280;
+  transition: all 0.3s ease;
+}
+
+.step.active .stepNumber {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.step.completed .stepNumber {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.stepLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.step.active .stepLabel {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* Payment Method Selection - Simplified for 2 methods */
+.paymentMethodsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .paymentMethodsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.paymentMethodCard {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paymentMethodCard input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.methodCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: white;
+  transition: all 0.3s ease;
+  text-align: center;
+  height: 100%;
+  min-height: 140px;
+}
+
+.methodCard:hover {
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.paymentMethodCard input:checked + .methodCard {
+  border-color: #3b82f6;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.05) 0%,
+    rgba(59, 130, 246, 0.02) 100%
+  );
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.methodIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  border-radius: 50%;
+  color: #4b5563;
+  transition: all 0.3s ease;
+}
+
+.paymentMethodCard input:checked + .methodCard .methodIcon {
+  background: #3b82f6;
+  color: white;
+}
+
+.methodName {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.methodDescription {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* Cash Payment Container */
+.cashPaymentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cashHeader {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.cashHeader h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.instructionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.instructionNumber {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.instructionText {
+  flex: 1;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.transactionId {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.transactionId code {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: #1f2937;
+  letter-spacing: 0.5px;
+}
+
+.paymentDetailsCard {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.paymentDetailsCard h4 {
   font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.875rem;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailRow span:first-child {
+  color: #6b7280;
+}
+
+.detailRow code {
+  font-family: monospace;
+  font-size: 0.8125rem;
+  background: #f1f5f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.noteBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 0.75rem;
+  color: #92400e;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.noteBox svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* Status Badges */
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusBadgePending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statusPaid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusPending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statusFailed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Form Styles */
+.paymentSection {
+  margin-top: 2rem;
 }
 
 .paymentSection h3 {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
-  margin: 0 0 1.5rem 0;
-}
-
-/* Form Styles */
-.formGroup {
   margin-bottom: 1.5rem;
 }
 
+.formGroup {
+  margin-bottom: 1.75rem;
+}
+
 .label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 500;
   color: #374151;
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
   border-radius: 0.75rem;
   font-size: 1rem;
   background: white;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  color: #1f2937;
 }
 
 .input:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-/* Payment Methods */
-.paymentMethods {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.paymentMethod {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  border: 2px solid #e5e7eb;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.paymentMethod:hover {
-  border-color: #d1d5db;
-}
-
-.radio {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.radioCheckmark {
-  position: relative;
-  width: 1.125rem;
-  height: 1.125rem;
-  border: 2px solid #d1d5db;
-  border-radius: 50%;
-  transition: all 0.2s;
-}
-
-.radio:checked + .radioCheckmark {
-  border-color: #3b82f6;
-  background: #3b82f6;
-}
-
-.radio:checked + .radioCheckmark::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0.5rem;
-  height: 0.5rem;
-  background: white;
-  border-radius: 50%;
-}
-
-.paymentMethod:has(.radio:checked) {
-  border-color: #3b82f6;
-  background: rgba(59, 130, 246, 0.05);
+.amountHelper {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.375rem;
 }
 
 /* Terms */
 .terms {
-  margin: 2rem 0;
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
 }
 
 .termsLabel {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.875rem;
   cursor: pointer;
   color: #374151;
-  line-height: 1.4;
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
-.checkbox {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
+/* Buttons */
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
 }
 
-.checkmark {
-  position: relative;
-  flex-shrink: 0;
-  width: 1.125rem;
-  height: 1.125rem;
-  border: 2px solid #d1d5db;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-  margin-top: 0.125rem;
-}
-
-.checkbox:checked + .checkmark {
-  border-color: #3b82f6;
-  background: #3b82f6;
-}
-
-.checkbox:checked + .checkmark::after {
-  content: "✓";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-
-/* Pay Button */
 .payButton {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background: #059669;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
-  padding: 1rem 2rem;
+  padding: 0.875rem 1.5rem;
   border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .payButton:hover:not(:disabled) {
-  background: #047857;
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+  box-shadow: 0 20px 40px rgba(5, 150, 105, 0.3);
 }
 
 .payButton:disabled {
@@ -236,22 +508,97 @@
   box-shadow: none;
 }
 
-.spinner {
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid transparent;
-  border-top: 2px solid white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.secondaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: white;
+  border: 2px solid #3b82f6;
+  border-radius: 0.75rem;
+  color: #3b82f6;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #eff6ff;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: white;
+  border: 2px solid #ef4444;
+  border-radius: 0.75rem;
+  color: #ef4444;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.cancelButton:hover {
+  background: #fef2f2;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  color: #374151;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.backButton:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.copyButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copyButton:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
 }
 
 /* Order Summary */
 .orderSummary {
   background: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
+  padding: 2rem;
+  border-radius: 1.25rem;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 2rem;
 }
@@ -260,13 +607,13 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
-  margin: 0 0 1.5rem 0;
+  margin-bottom: 1.5rem;
 }
 
 .summaryItems {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -274,42 +621,68 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #6b7280;
+  color: #4b5563;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.95rem;
 }
 
 .summaryDivider {
   height: 1px;
-  background: #e5e7eb;
-  margin: 0.5rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #e5e7eb 50%,
+    transparent 100%
+  );
+  margin: 1rem 0;
 }
 
 .summaryTotal {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.25rem;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
+  border: 2px solid #e5e7eb;
+}
+
+.totalLabel {
   font-size: 1.125rem;
   font-weight: 600;
   color: #1f2937;
 }
 
+.totalAmount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .securityNote {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: #059669;
   font-size: 0.875rem;
   font-weight: 500;
-  padding: 0.75rem;
+  padding: 1rem;
   background: #f0fdf4;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   border: 1px solid #bbf7d0;
-  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .features {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .feature {
@@ -320,12 +693,94 @@
   font-size: 0.875rem;
 }
 
-.feature svg {
-  color: #059669;
+/* Active Payment Info */
+.activePayment {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
 }
 
-/* Loading and No Room States */
-.loading,
+.activePayment h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.activePaymentDetails {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.activePaymentRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Payment Status */
+.paymentStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.statusIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusIcon.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.statusIcon.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.statusMessage {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.statusDescription {
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* Loading States */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 .noRoom {
   display: flex;
   flex-direction: column;
@@ -333,7 +788,6 @@
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
-  min-height: 50vh;
 }
 
 .noRoom h2 {
@@ -343,9 +797,10 @@
 
 .noRoom p {
   color: #6b7280;
-  margin: 0;
+  margin-bottom: 1.5rem;
 }
 
+/* Animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -366,7 +821,6 @@
   }
 
   .paymentLayout {
-    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
@@ -374,26 +828,53 @@
     padding: 1.5rem;
   }
 
-  .orderSummary {
-    position: static;
+  .stepLabel {
+    font-size: 0.75rem;
   }
 
-  .paymentMethods {
-    flex-direction: column;
+  .cashHeader h3 {
+    font-size: 1.25rem;
+  }
+
+  .paymentMethodsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .instructionItem {
+    gap: 0.75rem;
   }
 }
 
-@media (max-width: 480px) {
-  .title {
-    font-size: 1.75rem;
-  }
+/* Checkbox Styling */
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
 
-  .paymentForm {
-    padding: 1rem;
-  }
+.checkmark {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #d1d5db;
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+}
 
-  .payButton {
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
-  }
+.checkbox:checked + .checkmark {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkbox:checked + .checkmark::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
