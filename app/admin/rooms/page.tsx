@@ -165,15 +165,12 @@ export default function RoomManagement() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${API_BASE_URL}/api/rooms/delete/${roomId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/rooms/delete/${roomId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Failed to delete room: ${response.status}`);
